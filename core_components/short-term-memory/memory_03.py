@@ -19,7 +19,7 @@ def trim_messages(state: MessagesState):
 
     # Identify messages to delete (everything except the last 3)
     # We exclude the first message if you want to keep a persistent system instruction
-    delete_cmds = [RemoveMessage(id=m.id) for m in messages[:-5]]
+    delete_cmds = [RemoveMessage(id=m.id) for m in messages[:-3]]
     
     return {"messages": delete_cmds}
 
@@ -57,7 +57,7 @@ def chat(text: str):
     print(f"[AI]: {last_msg.content}")
 
 # Running the conversation sequence
-chat("hi, my name is bob")
+chat("hi, my name is ozy")
 chat("write a short poem about cats")
 chat("now do the same but for dogs")
 chat("what's my name?")
