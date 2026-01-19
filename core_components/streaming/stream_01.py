@@ -43,13 +43,13 @@ agent = create_agent(
 # 5. Execute the Agent using 'stream message mode'
 # Streaming mode messages allows you to see the output of the agent streaming tool calls and the final response.
 
-for token, metadata in agent.stream(  
-    {"messages": [{"role": "user", "content": "What is the weather in SF?"}]},
-    stream_mode="messages", # Streams tuples of (token, metadata) from any graph nodes where an LLM is invoked.
-):
-    print(f"node: {metadata['langgraph_node']}")
-    print(f"content: {token}")
-    print("\n")
+# for token, metadata in agent.stream(  
+#     {"messages": [{"role": "user", "content": "What is the weather in SF?"}]},
+#     stream_mode="messages", # Streams tuples of (token, metadata) from any graph nodes where an LLM is invoked.
+# ):
+#     print(f"node: {metadata['langgraph_node']}")
+#     print(f"content: {token}")
+#     print("\n")
 
 
 # 6. Customer updates
@@ -68,8 +68,19 @@ agent_custom = create_agent(llm, tools=[get_star_sign])
 
 print("\n--- RUNNING SECTION 6 ---")
 # Prompt must be specific enough to trigger the tool
-for chunk in agent_custom.stream(
-    {"messages": [{"role": "user", "content": "What is the star sign for 12 stars?"}]},
-    stream_mode="custom"
+# for chunk in agent_custom.stream(
+#     {"messages": [{"role": "user", "content": "What is the star sign for 12 stars?"}]},
+#     stream_mode="custom"
+# ):
+#     print(f"Custom Chunk: {chunk}")
+
+
+print("\n--- RUNNING SECTION 7 ---")
+#7. Using multiple streaming modes together
+for stream_mode, chunk in agent_custom.stream(
+    {"messages": [{"role": "user", "content": "What is the weather in SF?"}]},
+    stream_mode=["updates","messages"]
 ):
-    print(f"Custom Chunk: {chunk}")
+    print(f"Stream Mode: {stream_mode}")
+    print(f"Chunk: {chunk}")
+    print("\n")
