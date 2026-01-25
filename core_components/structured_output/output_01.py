@@ -37,6 +37,7 @@ agent = create_agent(
     tools=[],
     response_format=ToolStrategy(
         schema=MeetingAction,
+        handle_errors="Please provide a valid rating between 1-5 and include a comment.",
         tool_message_content="Action item captured and added to meeting notes!"
     )
 )
@@ -45,4 +46,4 @@ result = agent.invoke({
     "messages": [{"role": "user", "content": "From our meeting: Sarah needs to update the project timeline as soon as possible"}]
 })
 
-print(result["structured_response"])
+print(result)
